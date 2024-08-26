@@ -1,5 +1,5 @@
-import { Component, Input, signal } from '@angular/core';
-import { Product } from '../../models/product.model';
+import { Component, inject, signal } from '@angular/core';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-header',
@@ -9,8 +9,12 @@ import { Product } from '../../models/product.model';
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
+
+  private cartService = inject(CartService);
+  cart = this.cartService.cart;
+  total = this.cartService.total;
+
   hideSiteMenu = signal(true);
-  @Input({required: true}) cart: Product[] = [];
 
   toogleSiteMenu(){
     this.hideSiteMenu.update(prevState => !prevState);
